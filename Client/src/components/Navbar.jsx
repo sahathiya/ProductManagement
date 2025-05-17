@@ -70,10 +70,10 @@
 import React from 'react'
 import { CiHeart } from "react-icons/ci";
 import { IoCartOutline } from "react-icons/io5";
-
+import { GoHeart } from "react-icons/go";
 function Navbar() {
   return (
-    <nav className="bg-primary border-gray-200">
+    <nav className="fixed w-full z-20 top-0 start-0  bg-primary border-gray-200 font-poppins">
       <div className="max-w-screen-xl mx-auto flex items-center justify-between p-4">
         
         {/* Left - Logo or Placeholder */}
@@ -102,8 +102,8 @@ function Navbar() {
 
 
         {/* Right - Icons */}
-        <div className="w-1/3 flex justify-end items-center gap-4 text-white text-xl">
-          <a href="#"><CiHeart /></a>
+        <div className="w-1/3 flex justify-end items-center gap-4 text-white text-lg">
+          <a href="#"><GoHeart /></a>
           <a href="#">Sign In</a>
           <a href="#"><IoCartOutline /></a>
         </div>

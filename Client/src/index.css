@@ -67,12 +67,19 @@ button:focus-visible {
   }
 } */
 
-
+@font-face {
+    font-family:Poppins ;
+    src: url("../src//styles//font/Poppins-Regular.ttf");
+}
 @import "tailwindcss";
 
 @theme{
   --color-primary:#003F62;
+  --color-primary-light: #B3D4E5;
   --color-secondary:#EDA415;
+  --color-secondary-dark:#d49008;
+  --font-poppins:Poppins,"sans-serif"
+
 
 
 }
