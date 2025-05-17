@@ -51,21 +51,8 @@ if(!user){
     if(!isMatch){
         return res.status(400).json({message:'password is not match'})
     }
-    if(user.role=='admin'){
-      const Admintoken=jwt.sign({id:user._id,email:user.email},process.env.ADMIN_SECRETKEY,{expiresIn:'1d'})
-      
-      
-       res.cookie('Admintoken',Admintoken,{
-           httpOnly:false,
-           secure:true,
-           sameSite:'none',
-           maxAge:24*60*60*60*1000
-   
-       })
-       
-       
-      return  res.status(200).json({status:'success', message:'admin logged successfully',user})
-      }else{
+  
+  
         const token=jwt.sign({_id:user._id,email:user.email},process.env.USER_SECRETKEY,{expiresIn:'1d'})
         res.cookie('token',token,{
             httpOnly: false,
@@ -76,7 +63,7 @@ if(!user){
         })
         
         res.status(200).json({status:'success',message:'login successful',user})
-      }
+  
    
 }
 
