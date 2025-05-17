@@ -2,7 +2,7 @@ const express=require('express')
 const { UserRegistration, UserLogin, UserLogout } = require('../controllers/authController')
 const { AddCategory, AllCategories } = require('../controllers/categoryController')
 const tryCatch =require("../middilewares/tryCatch")
-const { AddSubCategory } = require('../controllers/subCategoryController')
+const { AddSubCategory, SubCategoryofCategory } = require('../controllers/subCategoryController')
 const upload=require("../middilewares/upload")
 const { AddProduct } = require('../controllers/productController')
 const userRoutes=express.Router()
@@ -21,6 +21,7 @@ userRoutes
 
 //subcategory
 .post("/product/category/:id",tryCatch(AddSubCategory))
+.get("/product/category/subcategory/:id",tryCatch(SubCategoryofCategory))
 
 
 //product

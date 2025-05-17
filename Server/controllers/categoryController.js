@@ -22,7 +22,7 @@ if(categoryExist){
 
 const AllCategories=async(req,res)=>{
 
-    const categories=await Category.find()
+    const categories=await Category.find().populate("subCategory")
     res.status(200).json({ status:true,message:"all categories",categories})
 
 }
