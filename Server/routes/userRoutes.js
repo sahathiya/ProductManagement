@@ -4,9 +4,10 @@ const { AddCategory, AllCategories } = require('../controllers/categoryControlle
 const tryCatch =require("../middilewares/tryCatch")
 const { AddSubCategory, SubCategoryofCategory } = require('../controllers/subCategoryController')
 const upload=require("../middilewares/upload")
-const { AddProduct, AllProducts, ProductByCategory, ProductbyId } = require('../controllers/productController')
+const { AddProduct, AllProducts, ProductByCategory, ProductbyId, ProductBySubCategory } = require('../controllers/productController')
 const { SearchByproductTitle } = require('../controllers/searchController')
 const {userAuthMiddleware}=require("../middilewares/userAuthMiddleware")
+const { addToWishlist, removeFromWishlist, AllwishlistProducts } = require('../controllers/wishlistController')
 const userRoutes=express.Router()
 userRoutes
 
@@ -24,6 +25,7 @@ userRoutes
 //subcategory
 .post("/product/category/:id",tryCatch(AddSubCategory))
 .get("/product/category/subcategory/:id",tryCatch(SubCategoryofCategory))
+.get("/product/subcategory/all/:subcategory",tryCatch(ProductBySubCategory))
 
 
 //product
@@ -40,7 +42,9 @@ userRoutes
 
 //wishlist
 
-
+.post("/product/wishlist/add/:id",userAuthMiddleware,tryCatch(addToWishlist))
+.delete("/product/wishlist/remove",userAuthMiddleware,tryCatch(removeFromWishlist))
+.get("/product/wishlist/all",userAuthMiddleware,tryCatch(AllwishlistProducts))
 
 
 

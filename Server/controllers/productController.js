@@ -1,5 +1,6 @@
 const Product=require("../models/productSchema")
 const mongoose=require('mongoose')
+const subCategory=require("../models/subCategorySchema")
 const AddProduct=async(req,res)=>{
     const userId=req.user.id
     const categoryId=req.params.id
@@ -72,6 +73,45 @@ if(!categoryProducts){
 }
 
 
+
+// const ProductBySubCategory=async(req,res)=>{
+
+//     const {subcategory}=req.query;
+    
+// const subcategoryProducts=await Product.find({subCategory:subcategory})
+
+// if(!subcategoryProducts){
+//   return    res.status(404).json({message:"products by this subcategory not found"})
+// }
+
+//  res.status(200).json({message:"all products in this subcategory",subcategoryProducts})
+// }
+
+const ProductBySubCategory = async (req, res) => {
+    console.log("gggg");
+    
+  const subcategory = req.params.subcategory; // lowercase s here must match frontend
+console.log("subcategory",subcategory);
+
+  if (!subcategory) {
+    return res.status(400).json({ message: "Missing subcategory query parameter" });
+  }
+
+
+  const subcategoryProducts = await Product.find({ subCategory: subcategory });
+console.log("subcategoryProducts",subcategoryProducts);
+
+  // Check if result array is empty
+  if ( subcategoryProducts.length === 0) {
+    return res.status(404).json({ message: "Products by this subcategory not found" });
+  }
+
+  return res.status(200).json({
+    message: "All products in this subcategory",
+    subcategoryProducts,
+  });
+};
+
 // const EditProduct=async(req,res)=>{
 
 //     const productId=req.params.id
@@ -79,4 +119,4 @@ if(!categoryProducts){
 
 // }
 
-module.exports={AddProduct,AllProducts,ProductByCategory,ProductbyId}
+module.exports={AddProduct,AllProducts,ProductByCategory,ProductbyId,ProductBySubCategory}
