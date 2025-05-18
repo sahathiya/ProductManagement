@@ -1,45 +1,84 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GoHeart } from "react-icons/go";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchProducts } from '../features/product/productActions';
-// const sampleProducts = [
-//   { id: 1, name: 'HP AMD Ryzen 3', price: 529.99, image: 'https://img.freepik.com/free-photo/laptop-isolated-white-background_1232-1706.jpg?uid=R197776071&ga=GA1.1.1588935672.1725689521&semt=ais_hybrid&w=740' },
-//   { id: 2, name: 'HP AMD Ryzen 3', price: 529.99, image: 'https://img.freepik.com/free-photo/laptop-isolated-white-background_1232-1706.jpg?uid=R197776071&ga=GA1.1.1588935672.1725689521&semt=ais_hybrid&w=740' },
-//   { id: 3, name: 'HP AMD Ryzen 3', price: 529.99, image: 'https://img.freepik.com/free-photo/laptop-isolated-white-background_1232-1706.jpg?uid=R197776071&ga=GA1.1.1588935672.1725689521&semt=ais_hybrid&w=740' },
-//   { id: 4, name: 'HP AMD Ryzen 3', price: 529.99, image: 'https://img.freepik.com/free-photo/laptop-isolated-white-background_1232-1706.jpg?uid=R197776071&ga=GA1.1.1588935672.1725689521&semt=ais_hybrid&w=740' },
-//   { id: 5, name: 'HP AMD Ryzen 3', price: 529.99, image: 'https://img.freepik.com/free-photo/laptop-isolated-white-background_1232-1706.jpg?uid=R197776071&ga=GA1.1.1588935672.1725689521&semt=ais_hybrid&w=740' },
-//   { id: 6, name: 'HP AMD Ryzen 3', price: 529.99, image: 'https://img.freepik.com/free-photo/laptop-isolated-white-background_1232-1706.jpg?uid=R197776071&ga=GA1.1.1588935672.1725689521&semt=ais_hybrid&w=740' },
-// ];
 
-const ProductList = ({ selectedCategory }) => {
-    const navigate=useNavigate()
-    const dispatch=useDispatch()
-    const Products=useSelector((state)=>state.product.products)
-    useEffect(()=>{
-dispatch(fetchProducts())
-    },[dispatch])
+const ProductList = () => {
+//     const navigate=useNavigate()
+//     const dispatch=useDispatch()
+//     const[products,setProducts]=useState([])
+//     const activeCategory=useSelector((state)=>state.category.activeCategory)
+//     const activeSubCategory=useSelector((state)=>state.subcategory.activeSubCategory)
+//     const Products=useSelector((state)=>state.product.products)
+//     const categoryProducts=useSelector((state)=>state.product.categoryProducts)
+//     const subCategoryProducts=useSelector((state)=>state.product.subCategoryProducts)
+//     useEffect(()=>{
+
+
+// if(activeCategory){
+//   setProducts(categoryProducts)
+
+// }else{
+//   dispatch(fetchProducts())
+//   setProducts(Products)
+// }
+//     },[dispatch,activeCategory, categoryProducts, Products,subCategoryProducts])
+
+//     console.log("subCategoryProducts",subCategoryProducts);
+    const navigate = useNavigate();
+const dispatch = useDispatch();
+const [products, setProducts] = useState([]);
+
+const activeCategory = useSelector((state) => state.category.activeCategory);
+const activeSubCategory = useSelector((state) => state.subcategory.activeSubCategory);
+const Products = useSelector((state) => state.product.products);
+const categoryProducts = useSelector((state) => state.product.categoryProducts);
+const subCategoryProducts = useSelector((state) => state.product.subCategoryProducts);
+
+// useEffect(() => {
+//   // Priority: subcategory > category > all
+//   if (activeSubCategory) {
+//     setProducts(subCategoryProducts);
+//   } else if (activeCategory) {
+//     setProducts(categoryProducts);
+//   } else {
+//     dispatch(fetchProducts()); // get all products
+//     setProducts(Products);
+//   }
+// }, [dispatch, activeSubCategory, activeCategory, Products, categoryProducts, subCategoryProducts]);
+
+useEffect(() => {
+  // Fetch all products once if nothing is selected
+  if (!activeCategory && !activeSubCategory) {
+    dispatch(fetchProducts());
+  }
+}, [dispatch, activeCategory, activeSubCategory]);
+
+
+
+useEffect(() => {
+  
+   if (activeCategory) {
+    setProducts(categoryProducts);
+  } else {
+    setProducts(Products); // this will now contain the result after fetchProducts() finishes
+  }
+}, [ activeCategory, Products, categoryProducts]);
+useEffect(() => {
+  if (activeSubCategory ) {
+    setProducts(subCategoryProducts);
+  
+  } else {
+    setProducts(Products); // this will now contain the result after fetchProducts() finishes
+  }
+}, [activeSubCategory, Products, subCategoryProducts]);
+
   return (
     <div className="w-full  md:w-4/5 font-poppins">
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-        {Products.map(product => (
-          // <div
-          //   key={product._id}
-          //   onClick={()=>navigate(`/productdetails/${product._id}`)}
-          //   className="border border-gray-300 p-4 rounded-lg shadow hover:shadow-md transition-all bg-white"
-          // >
-          //   <img src={product.images[0]} alt={product.title} className="w-full h-40 object-contain mb-2" />
-          //   <div className='bg-primary-light rounded-full'>
-          //       <GoHeart/>
-          //   </div>
-          //   <h4 className="text-md font-medium">{product.title}</h4>
-          //   <p className="text-gray-600">${product.price}</p>
-          //   <div className="flex gap-1 mt-1 text-yellow-500">
-          //     {'★★★★★'.split('').map((star, idx) => (
-          //       <span key={idx}>{star}</span>
-          //     ))}
-          //   </div>
-          // </div>
+        {products.map(product => (
+        
 
           <div
   key={product._id}
@@ -71,6 +110,8 @@ dispatch(fetchProducts())
 
         ))}
       </div>
+
+
 
       {/* Pagination */}
       <div className="flex justify-between items-center mt-6 text-sm text-gray-600">

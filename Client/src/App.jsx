@@ -7,6 +7,7 @@ import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import { ToastContainer } from 'react-toastify'
 import ProductDetails from './pages/ProductDetails'
+import Landing from './pages/Landing'
 function App() {
  
 
@@ -14,7 +15,9 @@ function App() {
     <>
     <Navbar/>
    <Routes>
-    <Route path='/' element={<Home/>}/>
+    
+    <Route path='/' element={<Landing/>}/>
+    <Route path='/dashboard' element={<Home/>}/>
     <Route path='/signup' element={<Registration/>}/>
     <Route path='/signin' element={<Login/>}/>
     <Route path='/productdetails/:id' element={<ProductDetails/>}/>

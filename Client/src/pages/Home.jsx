@@ -103,7 +103,7 @@ import CategoryModal from '../components/CategoryModal';
 import SubCategoryModal from '../components/SubCategoryModal';
 
 function Home() {
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  // const [selectedCategory, setSelectedCategory] = useState('All');
    const [showProductModal,setShowProductModal]=useState(false)
    const [showCategoryModal,setShowCategoryModal]=useState(false)
 const[showSubCategoryModal,setSubCategoryModal]=useState(false)
@@ -135,11 +135,12 @@ const[showSubCategoryModal,setSubCategoryModal]=useState(false)
       </div>
 
       {/* Sidebar */}
-      <Sidebar setSelectedCategory={setSelectedCategory} />
-
+      {/* <Sidebar setSelectedCategory={setSelectedCategory} /> */}
+ <Sidebar />
       {/* Product list */}
       <div className="ml-0 md:ml-[20%] p-4">
-        <ProductList selectedCategory={selectedCategory} />
+        {/* <ProductList selectedCategory={selectedCategory} /> */}
+         <ProductList  />
       </div>
 
       { showProductModal&&<ProductModal isOpen={showProductModal} onClose={() => setShowProductModal(false)}/>}

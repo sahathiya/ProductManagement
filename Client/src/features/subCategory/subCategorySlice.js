@@ -2,7 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 import { fetchSubCategories } from "./subCategoryActions";
 const subCategorySlice=createSlice({
     name:"subCategory",
-    initialState:{subCategories:[] ,loading:false,error:null},
+    initialState:{subCategories:[] , activeSubCategory:null,loading:false,error:null},
+    reducers:{
+
+      setActiveSubCategory:(state,action)=>{
+        state.activeSubCategory=action.payload
+
+      }
+
+    },
     extraReducers:(builder)=>{
 builder
  .addCase(fetchSubCategories.pending, (state) => {
@@ -20,5 +28,5 @@ builder
     }
 })
 
-
+export const {setActiveSubCategory}=subCategorySlice.actions
 export default subCategorySlice.reducer

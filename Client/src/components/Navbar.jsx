@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import { IoCartOutline } from "react-icons/io5";
 import { GoHeart } from "react-icons/go";
@@ -6,19 +6,28 @@ import axiosInstance from "../utils/axiosInstance";
 import { setUserLogout } from "../features/user/userSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import WishlistModal from "./WishlistModal";
 function Navbar() {
   const navigate = useNavigate();
+  const dispatch=useDispatch()
   const activeUser = useSelector((state) => state.user.activeUser);
-
-  const handleUserLogout = async () => {
+ const[wishlistModal,setWishlistModal]=useState(false)
+  const handleUserLogout = async (e) => {
+    e.preventDefault()
     const response = await axiosInstance.post("/api/auth/logout");
     console.log("resposne of user logout", response);
-
-    dispatch(setUserLogout());
+if(response.status===200){
+ dispatch(setUserLogout());
     toast.success(response.data.message);
-    navigate("/signin");
+    navigate("/");
+}
+   
   };
+
+  const handleWishlistModal=()=>{
+setWishlistModal(true)
+  }
   return (
     <nav className="fixed w-full z-20 top-0 start-0  bg-primary border-gray-200 font-poppins">
       <div className="max-w-screen-xl mx-auto flex items-center justify-between p-4">
@@ -42,20 +51,20 @@ function Navbar() {
         </div>
 
         <div className="w-full md:w-1/3 flex justify-end items-center gap-6 text-white text-lg">
-          <a
-            href="#"
+          <button
+           onClick={handleWishlistModal}
             className="flex items-center gap-1 hover:text-secondary transition"
           >
             <GoHeart />
             <span className="bg-secondary text-xs text-white w-4 h-4 flex items-center justify-center rounded-full">
               0
             </span>
-          </a>
+          </button>
 
           {activeUser == null ? (
             <a
-              onClick={handleUserLogout}
-              href=""
+             
+              href="/signin"
               className="hover:text-secondary transition text-sm"
             >
               Sign In
@@ -64,6 +73,7 @@ function Navbar() {
             <a
               href="/signin"
               className="hover:text-secondary transition text-sm"
+               onClick={handleUserLogout}
             >
               Sign Out
             </a>
@@ -79,6 +89,7 @@ function Navbar() {
             </span>
           </a>
         </div>
+        {wishlistModal&&<WishlistModal isOpen={wishlistModal} onClose={()=>setWishlistModal(false)}/>}
       </div>
     </nav>
   );

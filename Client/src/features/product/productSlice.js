@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchProducts } from "./productActions";
+import { fetchProductsByCategory } from "./productActions";
+import { fetchProductsBysubCategory } from "./productActions";
 const productSlice=createSlice({
     name:"category",
-    initialState:{products:[],loading:false,error:null},
+    initialState:{products:[],categoryProducts:[],subCategoryProducts:[],loading:false,error:null},
     // reducers:{
     //     setAllProducts:(state,action)=>{
     // state.activeCategory=action.payload
@@ -21,7 +23,41 @@ const productSlice=createSlice({
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+
+
+
+
+         .addCase(fetchProductsByCategory.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
+        state.loading = false;
+        state.categoryProducts = action.payload;
+      })
+      .addCase(fetchProductsByCategory.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+
+
+
+
+        .addCase(fetchProductsBysubCategory.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchProductsBysubCategory.fulfilled, (state, action) => {
+        state.loading = false;
+        state.subCategoryProducts = action.payload;
+      })
+      .addCase(fetchProductsBysubCategory.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
+
   }
 
 })

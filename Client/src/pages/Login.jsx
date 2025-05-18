@@ -18,6 +18,7 @@ const dispatch=useDispatch()
     });
 
     const handleSubmit=async(values)=>{
+     
 
  try {
     console.log("values", values);
@@ -28,7 +29,7 @@ const dispatch=useDispatch()
     toast.success(response.data.message);
 
    
-      navigate('/');
+      navigate('/dashboard');
    
   } catch (error) {
     toast.error(error.response?.data?.message || "Login failed");

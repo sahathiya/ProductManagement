@@ -321,14 +321,14 @@ const handleSubmit = async (e) => {
         <button
           type="button"
           onClick={handleAddVariant}
-          className="mt-2 px-4 py-1 bg-gray-800 text-white rounded hover:bg-gray-700"
+          className="mt-2 px-4 py-1 bg-primary text-white rounded hover:bg-gray-700"
         >
           Add variants
         </button>
       </div>
 
       {/* Display all saved variants (except last empty one) */}
-      <div className="mt-4">
+      {/* <div className="mt-4">
         <h3 className="text-gray-700 font-medium mb-2">Added Variants:</h3>
         <ul className="list-disc pl-6 text-sm text-gray-600">
           {variants
@@ -339,7 +339,7 @@ const handleSubmit = async (e) => {
               </li>
             ))}
         </ul>
-      </div>
+      </div> */}
     </div>
 
           <div className="flex flex-col md:flex-row md:items-center">

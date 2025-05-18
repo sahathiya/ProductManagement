@@ -33,7 +33,7 @@ const handleSubmit=async(values)=>{
 const user=response.data.user
 dispatch(setActiveUser(user))
 toast.success(response.data.message)
-  navigate('/')
+  navigate('/dashboard')
 
     
 
