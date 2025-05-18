@@ -7,7 +7,7 @@ const upload=require("../middilewares/upload")
 const { AddProduct, AllProducts, ProductByCategory, ProductbyId, ProductBySubCategory } = require('../controllers/productController')
 const { SearchByproductTitle } = require('../controllers/searchController')
 const {userAuthMiddleware}=require("../middilewares/userAuthMiddleware")
-const { addToWishlist, removeFromWishlist, AllwishlistProducts } = require('../controllers/wishlistController')
+const { addToWishlist, AllwishlistProducts } = require('../controllers/wishlistController')
 const userRoutes=express.Router()
 userRoutes
 
@@ -37,13 +37,13 @@ userRoutes
 
 //search
 
-.get("/product/search",tryCatch(SearchByproductTitle))
+.get("/product/name/search",tryCatch(SearchByproductTitle))
 
 
 //wishlist
 
 .post("/product/wishlist/add/:id",userAuthMiddleware,tryCatch(addToWishlist))
-.delete("/product/wishlist/remove",userAuthMiddleware,tryCatch(removeFromWishlist))
+
 .get("/product/wishlist/all",userAuthMiddleware,tryCatch(AllwishlistProducts))
 
 

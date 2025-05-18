@@ -1,5 +1,6 @@
-// const Wishlist = require("../models/wishlistModel");
+
 const Wishlist=require("../models/wishlistSchema")
+
 // Add to wishlist
 const addToWishlist = async (req, res) => {
   const productId = req.params.id;
@@ -24,22 +25,6 @@ const addToWishlist = async (req, res) => {
     }
 };
 
-// // Remove from wishlist
-// const removeFromWishlist = async (req, res) => {
-//   const { userId, productId } = req.body;
-
-//   if (!userId || !productId) {
-//     return res.status(400).json({ message: "userId and productId are required" });
-//   }
-
-//   const removed = await Wishlist.findOneAndDelete({ userId, productId });
-
-//   if (!removed) {
-//     return res.status(404).json({ message: "Product not found in wishlist" });
-//   }
-
-//   res.status(200).json({ message: "Removed from wishlist", removed });
-// };
 
 
 const AllwishlistProducts=async(req,res)=>{
@@ -50,6 +35,6 @@ res.status(200).json({message:'all products in wishlist',wishlist})
 }
 module.exports = {
   addToWishlist,
-//   removeFromWishlist,
+
   AllwishlistProducts
 };

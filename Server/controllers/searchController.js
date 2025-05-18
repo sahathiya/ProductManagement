@@ -4,6 +4,8 @@ const Product=require("../models/productSchema")
 
 const SearchByproductTitle = async (req, res) => {
   try {
+    console.log("hhhh");
+    
     const { title } = req.query;
 
     if (!title) {
@@ -18,8 +20,9 @@ const SearchByproductTitle = async (req, res) => {
     if (products.length === 0) {
       return res.status(404).json({ message: "No products found" });
     }
+console.log("products",products);
 
-    res.status(200).json(products);
+    res.status(200).json({products});
   } catch (error) {
     console.error("Error searching products:", error);
     res.status(500).json({ message: "Server error" });
