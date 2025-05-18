@@ -37,6 +37,8 @@ export default function AddProductModal({ isOpen, onClose }) {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
+    
+    
     setImages((prev) => [...prev, ...files]);
     const previewUrls = files.map((file) => URL.createObjectURL(file));
     setPreviews((prev) => [...prev, ...previewUrls]);
@@ -46,7 +48,7 @@ export default function AddProductModal({ isOpen, onClose }) {
     fileInputRef.current.click();
   };
 
-  console.log("images", fileInputRef.current);
+  console.log("images", images);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

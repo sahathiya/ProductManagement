@@ -57,31 +57,7 @@ const wishlists = useSelector((state) => state.wishlist.wishlists);
   const startIndex = (currentPage - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
   const currentProducts = products.slice(startIndex, endIndex);
-  // const handleToggle=async(productId)=>{
-  //   if(wishlists.includes(productId)){
-  //     const response=await axiosInstance.post(`/api/product/wishlist/add/${productId}`)
-  //   }else{
-  //     const response=await axiosInstance.post(`/api/product/wishlist/add/${productId}`)
-  //   }
-
-
-  // }
-
-//   const handleToggle = async (productId) => {
-//   try {
-//     if (wishlists.includes(productId)) {
-//       // Remove from wishlist
-//       await axiosInstance.delete(`/api/product/wishlist/remove/${productId}`);
-//       dispatch(setRemoveWishlist(productId));
-//     } else {
-//       // Add to wishlist
-//       await axiosInstance.post(`/api/product/wishlist/add/${productId}`);
-//       dispatch(fetchWishlist()); // Refetch or you can dispatch a manual add action
-//     }
-//   } catch (error) {
-//     console.error("Wishlist error:", error);
-//   }
-// };
+ 
 
 const handleToggle = async (productId) => {
   try {
@@ -106,47 +82,46 @@ console.log("wishlists",wishlists);
   return (
     <div className="w-full  md:w-4/5 font-poppins">
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-        {currentProducts .map((product) => (
-          <div
-            key={product._id}
-            
-            className="relative border border-gray-300 p-4 rounded-lg shadow hover:shadow-md transition-all bg-white"
-          >
-            {/* <div 
-            onClick={()=>handleToggle(product._id)}
-            className="absolute top-2 right-2 bg-primary-light p-2 rounded-full z-10">
-              <GoHeart />
-            </div> */}
-            <div 
-  onClick={() => handleToggle(product._id)}
-  className="absolute top-2 right-2 bg-primary-light p-2 rounded-full z-10 cursor-pointer"
->
-  {
-    wishlists.some(item => item.productId?._id === product?._id) 
-      ? <GoHeartFill className="text-primary" /> 
-      : <GoHeart />
-  }
-</div>
+      {currentProducts.length === 0 ? (
+  <p className="text-center text-gray-500 col-span-full">No products found</p>
+) : (
+  currentProducts.map((product) => (
+    <div
+      key={product?._id}
+      className="relative border border-gray-300 p-4 rounded-lg shadow hover:shadow-md transition-all bg-white"
+    >
+      {/* Wishlist toggle */}
+      <div
+        onClick={() => handleToggle(product._id)}
+        className="absolute top-2 right-2 bg-primary-light p-2 rounded-full z-10 cursor-pointer"
+      >
+        {wishlists.some(item => item.productId?._id === product?._id) 
+          ? <GoHeartFill className="text-primary" /> 
+          : <GoHeart />}
+      </div>
 
+      {/* Product Image */}
+      <img
+        onClick={() => navigate(`/productdetails/${product._id}`)}
+        src={product.images[0]}
+        alt={product.title}
+        className="w-full h-40 object-contain mb-2"
+      />
 
-            <img
-            onClick={() => navigate(`/productdetails/${product._id}`)}
-              src={product.images[0]}
-              alt={product.title}
-              className="w-full h-40 object-contain mb-2"
-            />
+      {/* Product Info */}
+      <h4 className="text-md font-medium">{product?.title}</h4>
+      <p className="text-gray-600">${product.variants?.[0]?.price}</p>
 
-            <h4 className="text-md font-medium">{product.title}</h4>
-            <p className="text-gray-600">${product.variants[0].price}</p>
-
-            {/* Static Rating */}
-            <div className="flex gap-1 mt-1 text-yellow-500">
-              {"★★★★★".split("").map((star, idx) => (
-                <span key={idx}>{star}</span>
-              ))}
-            </div>
-          </div>
+      {/* Static Rating */}
+      <div className="flex gap-1 mt-1 text-yellow-500">
+        {"★★★★★".split("").map((star, idx) => (
+          <span key={idx}>{star}</span>
         ))}
+      </div>
+    </div>
+  ))
+)}
+
       </div>
 
      
@@ -186,7 +161,11 @@ console.log("wishlists",wishlists);
             <option value={50}>50 rows</option>
           </select>
         </div>
+
+
       </div>
+      
+
       
     </div>
   );

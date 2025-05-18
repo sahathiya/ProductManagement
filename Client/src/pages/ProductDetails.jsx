@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
 import { GoHeart } from "react-icons/go";
 import EditModal from "../components/EditModal";
+import { toast } from "react-toastify";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -45,7 +46,9 @@ const ProductDetails = () => {
   }, [details]);
 
 
-
+const handleBuy=()=>{
+  toast.success("product added to cart")
+}
   return (
     <div className="container mx-auto px-4 py-8 mt-20">
       <div className="flex flex-col lg:flex-row gap-10">
@@ -137,7 +140,9 @@ const ProductDetails = () => {
             className="bg-secondary hover:bg-secondary-dark text-white px-6 py-3 rounded-full font-semibold">
               Edit product
             </button>
-            <button className="bg-secondary hover:bg-secondary-dark text-white px-6 py-3 rounded-full font-semibold">
+            <button 
+            onClick={handleBuy}
+            className="bg-secondary hover:bg-secondary-dark text-white px-6 py-3 rounded-full font-semibold">
               Buy it now
             </button>
             <button className="ml-2 p-3 rounded-full  bg-primary-light">
