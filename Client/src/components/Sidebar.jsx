@@ -36,22 +36,14 @@ useEffect(()=>{
 console.log("categories",categories);
 
 
-    const handleUserLogout=async()=>{
-        const response=await axiosInstance.post('/api/auth/logout')
-  console.log('resposne of user logout',response);
-  
-  dispatch(setUserLogout())
-  toast.success(response.data.message)
-  navigate('/signin')
 
-    }
 
 const handleSubCategory=(category)=>{
     const categoryId=category._id
       dispatch(fetchSubCategories(categoryId))
     const categoryName=category.name
 // setActiveCategory(categoryName)
-dispatch(setActiveCategory(categoryName) )
+dispatch(setActiveCategory(category) )
 setIsOpen(!isOpen)
   
 
@@ -68,70 +60,10 @@ console.log("activecategory",activeCategory);
   >
     All categories
   </button>
-      {/* {Object.entries(categories).map(([category, subcategories]) => (
-        <div key={category} className="mb-3">
-         <div className="flex justify-between items-center cursor-pointer hover:bg-blue-100 rounded px-2 py-1">
-  <h3 className="font-medium text-gray-700">{category}</h3>
-  <MdOutlineKeyboardArrowRight className="text-2xl text-gray-500" />
-</div>
-
-          <div className="ml-3">
-            {subcategories.length ? (
-              subcategories.map(sub => (
-                <div
-                  key={sub}
-                  onClick={() => setSelectedCategory(sub)}
-                  className="cursor-pointer px-2 py-1 text-sm rounded hover:bg-blue-100"
-                >
-                  {sub}
-                </div>
-              ))
-            ) : (
-              <div
-                onClick={() => setSelectedCategory(category)}
-                className="cursor-pointer text-sm px-2 py-1 hover:bg-blue-100 rounded "
-              >
-                View all
-              </div>
-            )}
-          </div>
-        </div>
-      ))} */}
+    
 
 
-{/* {categories.map((category) => (
-        <div key={category._id} className="mb-3">
-         <div 
-         onClick={()=>handleSubCategory(category)}
-         className="flex justify-between items-center cursor-pointer hover:bg-blue-100 rounded px-2 py-1">
-  <h3 className="font-medium text-gray-700">{category.name}</h3>
-  <MdOutlineKeyboardArrowRight className="text-2xl text-gray-500" />
-</div>
 
-          <div className="ml-3">
-            {subcategeory.length>0 ? (
-              subcategeory.map(sub => (
-                <div
-                  key={sub._id}
-                //   onClick={() => setSelectedCategory(sub)}
-                  className="cursor-pointer px-2 py-1 text-sm rounded hover:bg-blue-100"
-                >
-                  {sub.name}
-                </div>
-              ))
-            ) : (
-              <div
-                // onClick={() => setSelectedCategory(category)}
-                className="cursor-pointer text-sm px-2 py-1 hover:bg-blue-100 rounded "
-              >
-                View all
-              </div>
-            )}
-          </div>
-
-
-        </div>
-      ))} */}
 
       {categories.map((category) => (
   <div key={category._id} className="mb-3">
@@ -143,7 +75,7 @@ console.log("activecategory",activeCategory);
       <MdOutlineKeyboardArrowRight className="text-2xl text-gray-500" />
     </div>
 
-    {activeCategory === category.name &&isOpen&& (
+    {activeCategory.name === category.name &&isOpen&& (
       <div className="ml-3">
         {subcategeory.length > 0 ? (
           subcategeory.map(sub => (
@@ -166,19 +98,14 @@ console.log("activecategory",activeCategory);
 
 
 
-     <div className="p-4">
+     {/* <div className="p-4">
           <div className="flex items-center gap-2">
             <div 
             onClick={handleUserLogout}
             className="w-10 h-10 bg-primary text-white flex items-center justify-center rounded-full text-sm">
               <CiLogout className="text-xl font-semibold"/>
             </div>
-            {/* {isOpen && (
-              <div>
-                <p className="text-sm font-medium">{activeUser.name}</p>
-                <p className="text-xs text-gray-500">{activeUser.email}</p>
-              </div>
-            )} */}
+          
 
 
              <div>
@@ -188,7 +115,7 @@ console.log("activecategory",activeCategory);
           </div>
 
         
-        </div>
+        </div> */}
     </div>
   );
 };

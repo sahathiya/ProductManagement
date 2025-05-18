@@ -92,12 +92,23 @@
 import React, { useRef, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { X } from "lucide-react";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import axiosInstance from "../utils/axiosInstance";
+import { toast } from 'react-toastify';
+import { fetchProducts } from "../features/product/productActions";
 export default function AddProductModal({ isOpen, onClose }) {
+  const dispatch=useDispatch()
   const subcategeory = useSelector((state) => state.subcategory.subCategories);
-
-  const [variants, setVariants] = useState([]);
+const activeCategory=useSelector((state)=>state.category.activeCategory)
+const activeUser=useSelector((state)=>state.user.activeUser)
+  const [variants, setVariants] = useState([
+      { ram: "", price: "", quantity: "" }
+  ]);
+const [variant, setVariant] = useState({
+    ram:"",
+    price:0,
+    quantity:0
+});
 
   const [title, setTitle] = useState("");
   const [subCategory, setSubCategory] = useState("HP");
@@ -113,21 +124,83 @@ export default function AddProductModal({ isOpen, onClose }) {
   const [images, setImages] = useState([]);
   const fileInputRef = useRef(null);
 
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    const newImages = files.map((file) => URL.createObjectURL(file));
-    setImages((prev) => [...prev, ...newImages]);
-  };
+ const [previews, setPreviews] = useState([]);
+
+const handleImageChange = (e) => {
+  const files = Array.from(e.target.files);
+  setImages((prev) => [...prev, ...files]);
+  const previewUrls = files.map(file => URL.createObjectURL(file));
+  setPreviews((prev) => [...prev, ...previewUrls]);
+};
+
 
   const handleUploadClick = () => {
     fileInputRef.current.click();
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("submitted");
-    onClose();
+  console.log("images", fileInputRef.current);
+  
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData();
+
+  formData.append("title", title);
+  formData.append("userId", activeUser._id);
+  formData.append("subCategory", subCategory);
+  formData.append("description", description);
+  formData.append("variants", JSON.stringify(variants));
+
+  images.forEach((image) => formData.append("images", image));
+
+  try {
+    const response = await axiosInstance.post(
+      `api/product/add/${activeCategory._id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    console.log("response of product add", response.data);
+    if(response.status===200){
+       toast.success(response.data.message)
+       onClose();
+       dispatch(fetchProducts())
+
+    }
+   
+  } catch (err) {
+    console.error("Product add failed:", err);
+  }
+};
+
+
+  console.log("cccc",);
+  
+
+  const handleVariantChange = (index, e) => {
+    const { name, value } = e.target;
+    const updated = [...variants];
+    updated[index][name] = value;
+    setVariants(updated);
   };
+
+  // Add a new empty variant
+  const handleAddVariant = () => {
+    const last = variants[variants.length - 1];
+    if (!last.ram || !last.price || !last.quantity) {
+      alert("Please fill out all fields before adding a new variant.");
+      return;
+    }
+    setVariants([...variants, { ram: "", price: "", quantity: "" }]);
+  };
+
+  console.log("vvvv",variant,variants);
+  
   return (
     <Dialog
       open={isOpen}
@@ -157,7 +230,7 @@ export default function AddProductModal({ isOpen, onClose }) {
             />
           </div>
 
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <div className="flex justify-between flex-col md:flex-row md:items-center gap-4">
               <label className="text-gray-700 font-medium md:w-20">
                 Variants:
@@ -168,6 +241,9 @@ export default function AddProductModal({ isOpen, onClose }) {
                   <span>Ram:</span>
                   <input
                     type="text"
+                    name="ram"
+                    value={variant.ram}
+                    onChange={handleVariantChange}
                     className="w-20 border border-gray-300 rounded px-2 py-1"
                   />
                 </div>
@@ -175,6 +251,9 @@ export default function AddProductModal({ isOpen, onClose }) {
                   <span>Price:</span>
                   <input
                     type="number"
+                    name="price"
+                    value={variant.price}
+                    onChange={handleVariantChange}
                     className="w-24 border border-gray-300 rounded px-2 py-1"
                   />
                 </div>
@@ -182,6 +261,9 @@ export default function AddProductModal({ isOpen, onClose }) {
                   <span>QTY:</span>
                   <input
                     type="number"
+                    name="quantity"
+                    value={variant.quantity}
+                    onChange={handleVariantChange}
                     className="w-16 border border-gray-300 rounded px-2 py-1 text-center"
                   />
                 </div>
@@ -190,12 +272,75 @@ export default function AddProductModal({ isOpen, onClose }) {
             <div className="flex justify-end">
               <button
                 type="button"
+                onClick={handleAddVariants}
                 className="mt-2 px-4 py-1 bg-gray-800 text-white rounded hover:bg-gray-700"
               >
                 Add variants
               </button>
             </div>
+          </div> */}
+          <div className="space-y-4">
+      <label className="text-gray-700 font-medium">Variants:</label>
+
+      {variants.map((variant, index) => (
+        <div key={index} className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-2">
+            <span>Ram:</span>
+            <input
+              type="text"
+              name="ram"
+              value={variant.ram}
+              onChange={(e) => handleVariantChange(index, e)}
+              className="w-20 border border-gray-300 rounded px-2 py-1"
+            />
           </div>
+          <div className="flex items-center gap-2">
+            <span>Price:</span>
+            <input
+              type="number"
+              name="price"
+              value={variant.price}
+              onChange={(e) => handleVariantChange(index, e)}
+              className="w-24 border border-gray-300 rounded px-2 py-1"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <span>QTY:</span>
+            <input
+              type="number"
+              name="quantity"
+              value={variant.quantity}
+              onChange={(e) => handleVariantChange(index, e)}
+              className="w-16 border border-gray-300 rounded px-2 py-1 text-center"
+            />
+          </div>
+        </div>
+      ))}
+
+      <div className="flex justify-end">
+        <button
+          type="button"
+          onClick={handleAddVariant}
+          className="mt-2 px-4 py-1 bg-gray-800 text-white rounded hover:bg-gray-700"
+        >
+          Add variants
+        </button>
+      </div>
+
+      {/* Display all saved variants (except last empty one) */}
+      <div className="mt-4">
+        <h3 className="text-gray-700 font-medium mb-2">Added Variants:</h3>
+        <ul className="list-disc pl-6 text-sm text-gray-600">
+          {variants
+            .slice(0, -1) // exclude last empty input
+            .map((v, i) => (
+              <li key={i}>
+                RAM: {v.ram}, Price: ₹{v.price}, Quantity: {v.quantity}
+              </li>
+            ))}
+        </ul>
+      </div>
+    </div>
 
           <div className="flex flex-col md:flex-row md:items-center">
             <label className="w-full md:w-1/4 text-gray-700 font-medium">
@@ -236,7 +381,7 @@ export default function AddProductModal({ isOpen, onClose }) {
             </label>
 
             <div className="flex gap-3 mt-2 md:mt-0 flex-wrap">
-              {images.map((img, i) => (
+              {previews.map((img, i) => (
                 <img
                   key={i}
                   src={img}

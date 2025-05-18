@@ -1,22 +1,29 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchSubCategories } from '../features/subCategory/subCategoryActions';
+import axiosInstance from '../utils/axiosInstance';
 
 function SubCategoryModal({onClose}) {
+  const dispatch=useDispatch()
     const [subCategoryName, setSubCategoryName] = useState("");
 const categories=useSelector((state)=>state.category.categories)
       const [selectedOption, setSelectedOption] = useState('');
 
-
+const activeCategory=useSelector((state)=>state.category.activeCategory)
 
   const handleChange = (e) => {
     setSelectedOption(e.target.value);
     console.log("Selected:", e.target.value);
   };
-      const handleAdd = () => {
+      const handleAdd =async (categoryId) => {
         if (subCategoryName.trim()) {
-          onAdd(subCategoryName.trim());
+          const response=await axiosInstance.post(`/api/product/category/${categoryId}`,{name:subCategoryName})
+          if(response.status===200){
+dispatch(fetchSubCategories(categoryId))
           setSubCategoryName("");
           onClose();
+          }
+          
         }
       };
     
@@ -75,7 +82,7 @@ const categories=useSelector((state)=>state.category.categories)
         {/* Buttons */}
         <div className="flex space-x-4 mt-8">
           <button
-            onClick={handleAdd}
+            onClick={()=>handleAdd(activeCategory._id)}
             className="w-1/2 bg-secondary text-white py-2 rounded-lg hover:bg-secondary-dark transition"
           >
             ADD
