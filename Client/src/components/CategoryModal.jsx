@@ -4,18 +4,19 @@ import { useDispatch } from "react-redux";
 import axiosInstance from "../utils/axiosInstance";
 
 function CategoryModal({ onClose }) {
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const [categoryName, setCategoryName] = useState("");
 
-  const handleAdd = async() => {
+  const handleAdd = async () => {
     if (categoryName.trim()) {
-     const response=await axiosInstance.post(`/api/product/category/add`,{name:categoryName})
-     if(response.status===200){
-      setCategoryName("");
-      dispatch(fetchCategories())
-      onClose();
-     }
-     
+      const response = await axiosInstance.post(`/api/product/category/add`, {
+        name: categoryName,
+      });
+      if (response.status === 200) {
+        setCategoryName("");
+        dispatch(fetchCategories());
+        onClose();
+      }
     }
   };
 

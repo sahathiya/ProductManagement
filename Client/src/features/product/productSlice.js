@@ -5,11 +5,6 @@ import { fetchProductsBysubCategory } from "./productActions";
 const productSlice=createSlice({
     name:"category",
     initialState:{products:[],categoryProducts:[],subCategoryProducts:[],loading:false,error:null},
-    // reducers:{
-    //     setAllProducts:(state,action)=>{
-    // state.activeCategory=action.payload
-    //     }
-    // },
      extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
@@ -61,5 +56,5 @@ const productSlice=createSlice({
   }
 
 })
-// export const{setActiveCategory}=productSlice.actions
+
 export default productSlice.reducer;

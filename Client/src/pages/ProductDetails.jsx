@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaCheck, FaHeart } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
 import { GoHeart } from "react-icons/go";
@@ -11,10 +11,16 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchproductbyId = async () => {
       const response = await axiosInstance.get(`/api/product/${id}`);
-      setDetails(response.data.product);
+      const data = response.data.product;
+      setDetails(data);
+      if (data.images?.length > 0) setSelectedImage(data.images[0]);
+      if (data.variants?.length > 0) {
+        setSelectedVariant(data.variants[0]);
+        setPrice(data.variants[0].price);
+      }
     };
     fetchproductbyId();
-  }, []);
+  }, [id]);
 
   const [selectedImage, setSelectedImage] = useState("");
   const [selectedVariant, setSelectedVariant] = useState(null);
@@ -122,7 +128,6 @@ const ProductDetails = () => {
             </div>
           </div>
 
-        
           <div className="mt-8 flex flex-wrap gap-4 items-center">
             <button className="bg-secondary hover:bg-secondary-dark text-white px-6 py-3 rounded-full font-semibold">
               Edit product
