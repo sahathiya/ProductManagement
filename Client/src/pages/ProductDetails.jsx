@@ -3,11 +3,12 @@ import { FaCheck } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
 import { GoHeart } from "react-icons/go";
+import EditModal from "../components/EditModal";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [details, setDetails] = useState({});
-
+  const[editModal,setEditModal]=useState(false)
   useEffect(() => {
     const fetchproductbyId = async () => {
       const response = await axiosInstance.get(`/api/product/${id}`);
@@ -42,6 +43,8 @@ const ProductDetails = () => {
       setPrice(details.variants?.[0].price);
     }
   }, [details]);
+
+
 
   return (
     <div className="container mx-auto px-4 py-8 mt-20">
@@ -129,7 +132,9 @@ const ProductDetails = () => {
           </div>
 
           <div className="mt-8 flex flex-wrap gap-4 items-center">
-            <button className="bg-secondary hover:bg-secondary-dark text-white px-6 py-3 rounded-full font-semibold">
+            <button 
+            onClick={()=>setEditModal(true)}
+            className="bg-secondary hover:bg-secondary-dark text-white px-6 py-3 rounded-full font-semibold">
               Edit product
             </button>
             <button className="bg-secondary hover:bg-secondary-dark text-white px-6 py-3 rounded-full font-semibold">
@@ -139,6 +144,8 @@ const ProductDetails = () => {
               <GoHeart />
             </button>
           </div>
+
+          {editModal&&<EditModal isOpen={editModal} onClose={()=>setEditModal(false)} details={details}/>}
         </div>
       </div>
     </div>

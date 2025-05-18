@@ -12,6 +12,7 @@ function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const activeUser = useSelector((state) => state.user.activeUser);
+  const wishlists = useSelector((state) => state.wishlist.wishlists);
   const [wishlistModal, setWishlistModal] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -118,7 +119,7 @@ function Navbar() {
           >
             <GoHeart />
             <span className="bg-secondary text-xs text-white w-4 h-4 flex items-center justify-center rounded-full">
-              0
+              {wishlists.length||0}
             </span>
           </button>
 

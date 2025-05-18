@@ -5,12 +5,31 @@ const wishlistSlice = createSlice({
   name: "wishlist",
   initialState: { wishlists: [], loading: false, error: null },
   reducers: {
+//     setRemoveWishlist: (state, action) => {
+//        const productId = action.payload;
+//     state.wishlists = state.wishlists.filter((id) => id !== productId);
+//       },
+//         setAddWishlist: (state, action) => {
+//     const productId = action.payload;
+//     if (!state.wishlists.includes(productId)) {
+//       state.wishlists.push(productId);
+//     }
+//   },
     setRemoveWishlist: (state, action) => {
-      const IdToRemove = action.payload;
-      if (Array.isArray(state.wishlists)) {
-        state.wishlists.splice(IdToRemove, 1);
-      }
-    },
+    const productId = action.payload;
+    state.wishlists = state.wishlists.filter(
+      (product) => product._id !== productId
+    );
+  },
+  setAddWishlist: (state, action) => {
+    const newProduct = action.payload;
+    const exists = state.wishlists.some(
+      (product) => product._id === newProduct
+    );
+    if (!exists) {
+      state.wishlists.push(newProduct);
+    }
+  },
   },
 
   extraReducers: (builder) => {
@@ -30,5 +49,5 @@ const wishlistSlice = createSlice({
   },
 });
 
-export const { setRemoveWishlist } = wishlistSlice.actions;
+export const { setRemoveWishlist,setAddWishlist } = wishlistSlice.actions;
 export default wishlistSlice.reducer;
