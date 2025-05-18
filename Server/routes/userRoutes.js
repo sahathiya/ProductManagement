@@ -4,7 +4,9 @@ const { AddCategory, AllCategories } = require('../controllers/categoryControlle
 const tryCatch =require("../middilewares/tryCatch")
 const { AddSubCategory, SubCategoryofCategory } = require('../controllers/subCategoryController')
 const upload=require("../middilewares/upload")
-const { AddProduct } = require('../controllers/productController')
+const { AddProduct, AllProducts, ProductByCategory, ProductbyId } = require('../controllers/productController')
+const { SearchByproductTitle } = require('../controllers/searchController')
+const {userAuthMiddleware}=require("../middilewares/userAuthMiddleware")
 const userRoutes=express.Router()
 userRoutes
 
@@ -26,6 +28,20 @@ userRoutes
 
 //product
 
-.post("/product/add/:id",upload.array("images",3),tryCatch(AddProduct))
+.post("/product/add/:id",userAuthMiddleware,upload.array("images",3),tryCatch(AddProduct))
+.get("/product/all",tryCatch(AllProducts))
+.get("/product/category/all/:id",tryCatch(ProductByCategory))
+.get("/product/:id",tryCatch(ProductbyId))
+
+//search
+
+.get("/product/search",tryCatch(SearchByproductTitle))
+
+
+//wishlist
+
+
+
+
 
 module.exports=userRoutes
