@@ -1,10 +1,14 @@
 
 const Wishlist=require("../models/wishlistSchema")
-
+const mongoose=require('mongoose')
 // Add to wishlist
 const addToWishlist = async (req, res) => {
   const productId = req.params.id;
-
+ if (!mongoose.Types.ObjectId.isValid(productId)) {
+    return res
+      .status(400)
+      .json({ status: false, message: "Invalid product ID" });
+  }
 
   if (!productId) {
     return res.status(400).json({ message: "Product ID is required" });

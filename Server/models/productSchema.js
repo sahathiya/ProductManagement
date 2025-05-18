@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.ObjectId, ref: "User" },
-  title: { type: String, required: true },
+  title: { type: String },
   variants: [
     {
       ram: { type: String },
@@ -11,8 +11,8 @@ const productSchema = new mongoose.Schema({
     },
   ],
   category: { type: mongoose.Schema.ObjectId, ref: "Category" },
-  subCategory: { type: String, required: true },
-  description: { type: String, required: true },
+  subCategory: { type: String },
+  description: { type: String},
   images: [{ type: String }],
   createdAt: {
     type: Date,

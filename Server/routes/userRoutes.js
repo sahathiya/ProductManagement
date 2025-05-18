@@ -4,7 +4,7 @@ const { AddCategory, AllCategories } = require('../controllers/categoryControlle
 const tryCatch =require("../middilewares/tryCatch")
 const { AddSubCategory, SubCategoryofCategory } = require('../controllers/subCategoryController')
 const upload=require("../middilewares/upload")
-const { AddProduct, AllProducts, ProductByCategory, ProductbyId, ProductBySubCategory } = require('../controllers/productController')
+const { AddProduct, AllProducts, ProductByCategory, ProductbyId, ProductBySubCategory, EditProduct } = require('../controllers/productController')
 const { SearchByproductTitle } = require('../controllers/searchController')
 const {userAuthMiddleware}=require("../middilewares/userAuthMiddleware")
 const { addToWishlist, AllwishlistProducts } = require('../controllers/wishlistController')
@@ -31,6 +31,7 @@ userRoutes
 //product
 
 .post("/product/add/:id",userAuthMiddleware,upload.array("images",3),tryCatch(AddProduct))
+.patch("/product/edit/:id",upload.array("images",3),tryCatch(EditProduct))
 .get("/product/all",tryCatch(AllProducts))
 .get("/product/category/all/:id",tryCatch(ProductByCategory))
 .get("/product/:id",tryCatch(ProductbyId))

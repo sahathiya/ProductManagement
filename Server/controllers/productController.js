@@ -4,7 +4,7 @@ const subCategory = require("../models/subCategorySchema");
 const AddProduct = async (req, res) => {
   const userId = req.user.id;
   const categoryId = req.params.id;
-  const { title, description, subCategory, image } = req.body;
+  const { title, description, subCategory } = req.body;
   let variants = req.body.variants;
 
   let images = req.files.map((file) => file.path);
@@ -91,11 +91,37 @@ const ProductBySubCategory = async (req, res) => {
   });
 };
 
-// const EditProduct=async(req,res)=>{
+const EditProduct=async(req,res)=>{
+const{title,subCategory,description}=req.body
+ let variants = req.body.variants;
 
-//     const productId=req.params.id
+  let images = req.files.map((file) => file.path);
+  console.log("images", req.files);
 
-// }
+  if (typeof variants === "string") {
+    variants = JSON.parse(variants);
+  }
+    const productId=req.params.id
+    const product=await Product.findOne({_id:productId})
+
+    if(!product){
+        return res
+      .status(404)
+      .json({ message: "product not found" });
+    }
+
+product.title=title
+product.variants=variants
+product.subCategory=subCategory,
+product.description=description,
+product.images=images
+
+
+
+await product.save()
+res.status(200).json({ message: "product successfully edited" ,product});
+
+}
 
 module.exports = {
   AddProduct,
@@ -103,4 +129,5 @@ module.exports = {
   ProductByCategory,
   ProductbyId,
   ProductBySubCategory,
+  EditProduct
 };
