@@ -130,21 +130,22 @@ function Navbar() {
           </button>
         )}
 
-          {activeUser == null ? (
-            <a
-              href="/signin"
+          {activeUser === null ? (
+            <button
+            onClick={()=>navigate("/signin")}
+              
               className="hover:text-secondary transition text-sm"
             >
               Sign In
-            </a>
+            </button>
           ) : (
-            <a
-              href="/signin"
+            <button
+            
               className="hover:text-secondary transition text-sm"
               onClick={handleUserLogout}
             >
               Sign Out
-            </a>
+            </button>
           )}
 
         {activeUser!==null&&(
