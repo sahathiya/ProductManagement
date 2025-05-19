@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function Landing() {
     const navigate=useNavigate()
   return (
-    <div className="w-full  h-screen  bg-primary text-white flex flex-col justify-center items-center p-10 relative">
+    <div className="w-full  h-screen  bg-primary text-white flex flex-col justify-center items-center p-10 relative font-poppins">
       <h2 className="text-3xl font-bold mb-4">Hello Friend!</h2>
       <p className="text-center mb-6">
         Enter your personal details and <br />

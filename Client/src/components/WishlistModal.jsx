@@ -24,7 +24,7 @@ function WishlistModal({ isOpen, onClose }) {
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0    backdrop-blur-md " onClick={onClose} />
+        <div className="fixed inset-0  font-poppins  backdrop-blur-md " onClick={onClose} />
       )}
 
       <div

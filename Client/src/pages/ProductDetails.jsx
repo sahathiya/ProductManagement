@@ -50,7 +50,7 @@ const handleBuy=()=>{
   toast.success("product added to cart")
 }
   return (
-    <div className="container mx-auto px-4 py-8 mt-20">
+    <div className="container mx-auto px-4 py-8 mt-20 font-poppins">
       <div className="flex flex-col lg:flex-row gap-10">
         <div className="flex-1">
           <div className="border p-4 rounded-xl">

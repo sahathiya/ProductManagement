@@ -363,7 +363,7 @@ console.log("setImages",images);
     <Dialog
       open={isOpen}
       onClose={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur"
+      className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur font-poppins"
     >
       <div className="relative w-full max-w-3xl mx-4 md:mx-auto bg-white rounded-xl shadow-lg p-6">
         <button

@@ -33,7 +33,7 @@ function Registration() {
     navigate("/dashboard");
   };
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
+    <div className="min-h-screen flex items-center justify-center bg-white font-poppins">
       <div className="w-full max-w-5xl flex flex-col md:flex-row shadow-lg rounded-lg overflow-hidden border border-gray-200">
         <div className="w-full md:w-1/2 bg-[#004071] text-white flex flex-col justify-center items-center p-10 relative">
           <h2 className="text-3xl font-bold mb-4">Welcome Back!</h2>
