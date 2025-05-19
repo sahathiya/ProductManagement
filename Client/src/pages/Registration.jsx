@@ -82,12 +82,13 @@ function Registration() {
                       placeholder="Name"
                       className="bg-transparent outline-none w-full"
                     />
+                  
+                  </div>
                     <ErrorMessage
                       name="name"
                       component="div"
                       className="text-red-500 text-sm mt-1"
                     />
-                  </div>
                 </div>
                 <div className="mb-4">
                   <div className="flex items-center bg-gray-100 rounded px-4 py-3">
@@ -100,12 +101,13 @@ function Registration() {
                       name="email"
                       className="bg-transparent outline-none w-full"
                     />
-                    <ErrorMessage
+                 
+                  </div>
+                     <ErrorMessage
                       name="email"
                       component="div"
                       className="text-red-500 text-sm mt-1"
                     />
-                  </div>
                 </div>
                 <div className="mb-6">
                   <div className="flex items-center bg-gray-100 rounded px-4 py-3">
@@ -118,12 +120,13 @@ function Registration() {
                       placeholder="Password"
                       className="bg-transparent outline-none w-full"
                     />
-                    <ErrorMessage
+                   
+                  </div>
+                   <ErrorMessage
                       name="password"
                       component="div"
                       className="text-red-500 text-sm mt-1"
                     />
-                  </div>
                 </div>
                 <button
                   type="submit"
