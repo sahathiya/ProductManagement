@@ -8,7 +8,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import WishlistModal from "./WishlistModal";
 import CartModal from "./CartModal";
-
+import cart from "../assets/cart.png"
 function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -68,7 +68,8 @@ function Navbar() {
           </div>
         ) : (
           <div className="w-1/3" onClick={() => navigate("/dashboard")}>
-            <h1 className="text-white text-xl font-bold">Logo</h1>
+            {/* <h1 className="text-white text-xl font-bold">Logo</h1> */}
+            <img src={cart}/>
           </div>
         )}
 
