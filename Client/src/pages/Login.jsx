@@ -64,12 +64,13 @@ function Login() {
                       placeholder="Email"
                       className="bg-transparent outline-none w-full"
                     />
-                    <ErrorMessage
+                    
+                  </div>
+                  <ErrorMessage
                       name="email"
                       component="div"
                       className="text-red-500 text-sm mt-1"
                     />
-                  </div>
                 </div>
                 <div className="mb-6">
                   <div className="flex items-center bg-gray-100 rounded px-4 py-3">
@@ -82,12 +83,13 @@ function Login() {
                       placeholder="Password"
                       className="bg-transparent outline-none w-full"
                     />
-                    <ErrorMessage
+                    
+                  </div>
+                  <ErrorMessage
                       name="password"
                       component="div"
                       className="text-red-500 text-sm mt-1"
                     />
-                  </div>
                 </div>
                 <p className="text-center underline">forgot password?</p>
 
