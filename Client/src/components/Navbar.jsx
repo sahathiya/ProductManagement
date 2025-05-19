@@ -64,11 +64,11 @@ function Navbar() {
       <div className="max-w-screen-xl mx-auto flex items-center justify-between p-4">
         {activeUser === null ? (
           <div className="w-1/3" onClick={() => navigate("/")}>
-            <h1 className="text-white text-xl font-bold">Logo</h1>
+             <img src={cart} className="w-10 h-10 object-contain" alt="Logo"/>
           </div>
         ) : (
           <div className="w-1/3" onClick={() => navigate("/dashboard")}>
-            {/* <h1 className="text-white text-xl font-bold">Logo</h1> */}
+            
             <img src={cart} className="w-10 h-10 object-contain" alt="Logo"/>
           </div>
         )}
