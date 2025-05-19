@@ -109,7 +109,9 @@ function Login() {
             Enter your personal details and <br />
             start your journey with us
           </p>
-          <button className="border border-white px-8 py-2 rounded-full hover:bg-white hover:text-[#004071] transition">
+          <button 
+          onClick={()=>navigate(`/signup`)}
+          className="border border-white px-8 py-2 rounded-full hover:bg-white hover:text-[#004071] transition">
             SIGN UP
           </button>
 

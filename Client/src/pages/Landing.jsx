@@ -11,7 +11,7 @@ function Landing() {
         start your journey with us
       </p>
       <button
-      onClick={()=>navigate('/signin')} 
+      onClick={()=>navigate('/signup')} 
       className="border border-white px-8 py-2 rounded-full hover:bg-white hover:text-[#004071] transition">
         GET STARTED
       </button>
