@@ -69,7 +69,7 @@ function Navbar() {
         ) : (
           <div className="w-1/3" onClick={() => navigate("/dashboard")}>
             {/* <h1 className="text-white text-xl font-bold">Logo</h1> */}
-            <img src={cart}/>
+            <img src={cart} className="w-10 h-10 object-contain" alt="Logo"/>
           </div>
         )}
 
