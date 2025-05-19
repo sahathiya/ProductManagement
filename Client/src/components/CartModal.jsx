@@ -2,11 +2,12 @@ import React from "react";
 import clsx from "clsx";
 import { X } from "lucide-react";
 import { IoCartOutline } from "react-icons/io5";
+
 function CartModal({ isOpen, onClose }) {
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0    backdrop-blur-md " onClick={onClose} />
+        <div className="fixed inset-0 backdrop-blur-md font-poppins" onClick={onClose} />
       )}
 
       <div
