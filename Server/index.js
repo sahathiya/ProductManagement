@@ -12,6 +12,7 @@ const app=express()
 app.use(express.json())
 app.use(cors({
   origin: 'https://product-management-sahathiyas-projects.vercel.app',
+  //  origin: 'http://localhost:3000',
   credentials: true
 }));
 

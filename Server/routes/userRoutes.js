@@ -8,6 +8,7 @@ const { AddProduct, AllProducts, ProductByCategory, ProductbyId, ProductBySubCat
 const { SearchByproductTitle } = require('../controllers/searchController')
 const {userAuthMiddleware}=require("../middilewares/userAuthMiddleware")
 const { addToWishlist, AllwishlistProducts } = require('../controllers/wishlistController')
+const { addToCart, AllCartProducts } = require('../controllers/cartController')
 const userRoutes=express.Router()
 userRoutes
 
@@ -47,6 +48,11 @@ userRoutes
 
 .get("/product/wishlist/all",userAuthMiddleware,tryCatch(AllwishlistProducts))
 
+
+//cart
+.post("/product/cart/add/:id",userAuthMiddleware,tryCatch(addToCart))
+
+.get("/product/cart/all",userAuthMiddleware,tryCatch(AllCartProducts))
 
 
 module.exports=userRoutes
