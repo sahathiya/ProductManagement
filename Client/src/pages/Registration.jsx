@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { LuUser } from "react-icons/lu";
 import { HiOutlineMail } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
@@ -9,10 +9,13 @@ import axiosInstance from "../utils/axiosInstance";
 import { useDispatch } from "react-redux";
 import { setActiveUser } from "../features/user/userSlice";
 import { toast } from "react-toastify";
+import { IoEyeOutline } from "react-icons/io5";
+import { IoEyeOffOutline } from "react-icons/io5";
 function Registration() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+   const[showPassword,setShowPassword]=useState(false)
+  
   const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
@@ -110,17 +113,23 @@ function Registration() {
                     />
                 </div>
                 <div className="mb-6">
-                  <div className="flex items-center bg-gray-100 rounded px-4 py-3">
+                  <div className="flex items-center relative bg-gray-100 rounded px-4 py-3">
                     <span className="mr-3 text-gray-400">
                       <GoLock />
                     </span>
                     <Field
-                      type="password"
+                      type={showPassword?`text`:`password`}
                       name="password"
                       placeholder="Password"
                       className="bg-transparent outline-none w-full"
                     />
-                   
+                    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      className="absolute top-[55%] right-3 -translate-y-1/2 cursor-pointer text-gray-500"
+    >
+      {showPassword ? <IoEyeOffOutline size={20} /> : <IoEyeOutline size={20} />}
+    </button>
                   </div>
                    <ErrorMessage
                       name="password"

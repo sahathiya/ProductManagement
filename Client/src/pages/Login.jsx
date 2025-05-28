@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoLock } from "react-icons/go";
 import { HiOutlineMail } from "react-icons/hi";
@@ -8,9 +8,12 @@ import { useDispatch } from "react-redux";
 import { setActiveUser } from "../features/user/userSlice";
 import { toast } from "react-toastify";
 import axiosInstance from "../utils/axiosInstance";
+import { IoEyeOutline } from "react-icons/io5";
+import { IoEyeOffOutline } from "react-icons/io5";
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const[showPassword,setShowPassword]=useState(false)
   const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email").required("Email is required"),
     password: Yup.string()
@@ -73,17 +76,23 @@ function Login() {
                     />
                 </div>
                 <div className="mb-6">
-                  <div className="flex items-center bg-gray-100 rounded px-4 py-3">
+                  <div className="flex items-center relative bg-gray-100 rounded px-4 py-3">
                     <span className="mr-3 text-gray-400">
                       <GoLock />
                     </span>
                     <Field
-                      type="password"
+                     type={showPassword?`text`:`password`}
                       name="password"
                       placeholder="Password"
                       className="bg-transparent outline-none w-full"
                     />
-                    
+                     <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute top-[55%] right-3 -translate-y-1/2 cursor-pointer text-gray-500"
+                        >
+                          {showPassword ? <IoEyeOffOutline size={20} /> : <IoEyeOutline size={20} />}
+                        </button>
                   </div>
                   <ErrorMessage
                       name="password"
@@ -91,8 +100,9 @@ function Login() {
                       className="text-red-500 text-sm mt-1"
                     />
                 </div>
-                <p className="text-center underline">forgot password?</p>
-
+             
+                <p className="text-center underline text-primary cursor-pointer">Forgot password?</p>
+   <br />
                 <button
                   type="submit"
                   disabled={isSubmitting}
